@@ -20,7 +20,7 @@ Start the API from `D:\Projectss\BDA`:
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r backend\requirements.txt
-uvicorn backend.app.main:app --reload --port 8000
+uvicorn backend.app.main:app --reload --port 8001
 ```
 
 Start the frontend in a second terminal:
@@ -31,8 +31,8 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. FastAPI documentation is available at
-`http://localhost:8000/docs`.
+Open `http://127.0.0.1:5174` or `http://localhost:5173`. FastAPI documentation
+is available at `http://127.0.0.1:8001/docs`.
 
 Set `DATASET_PATH` or `PROCESSED_DATASET_PATH` when using a different CSV or the
 cleaned Parquet output from the existing pipeline. The backend caches the loaded
