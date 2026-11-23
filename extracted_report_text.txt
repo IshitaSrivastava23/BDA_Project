@@ -1,0 +1,440 @@
+=== PAGE 1 ===
+ 
+ 
+ 
+ 
+ 
+ 
+RAMAIAH INSTITUTE OF TECHNOLOGY 
+Department of Computer Science and Engineering 
+Dataset Analysis for Real-Time Scenarios 
+Subject: Big Data Analytics   |   Code: CSE557   |   Term: 2026   |   Non-CIE: 10 Marks 
+ 
+Project Title  
+Hospital Length of Stay Prediction and Resource Utilization Analysis Using Big Data Analytics 
+ 
+Faculty guide 
+Uzma Sulthana 
+ 
+Team member details: 
+Student name USN Main responsibility 
+Keshav Kunal 1MS24CS081  
+Ishita Srivastava 1MS24CS070  
+ 
+
+=== PAGE 2 ===
+ 
+ 
+Project Overview 
+This project analyses hospital inpatient discharge records to understand and predict Length of Stay (LoS). It uses 
+the publicly available New York State SPARCS 2016 dataset, containing over 2.3 million records and 34 
+attributes. 
+Apache Spark and PySpark are used for data cleaning, processing, aggregation and exploratory machine 
+learning. The analysis examines how hospital stay duration varies across age groups, admission types, diagnosis 
+categories and illness severity. 
+The project aims to demonstrate how Big Data technologies can support historical healthcare analysis and 
+resource planning. It does not calculate live bed occupancy or provide clinical recommendations. 
+Project Element Description 
+Domain Healthcare Analytics 
+Dataset SPARCS 2016 Inpatient Discharges 
+Main Objective Length of Stay analysis and prediction 
+Technology Python, PySpark, Spark SQL, Spark MLlib 
+Data Type Historical, structured and de-identified 
+Expected Outputs Cleaned data, statistical analysis, visualizations and model evaluation 
+ 
+1. Real-World Scenario and Problem Statement 
+1.1 Scenario and Problem 
+Hospitals must manage beds, staff, equipment and medical services while treating patients with different 
+conditions and illness severity. 
+Length of Stay is an important operational measure because longer stays require hospital resources for more 
+days. It varies according to factors such as age, diagnosis, admission type and severity of illness. 
+Problem Statement: Analyse a large hospital discharge dataset using Big Data technologies to identify patterns in 
+Length of Stay, compare patient and diagnosis groups, and develop a machine learning model to estimate stay 
+duration. 
+1.2 Stakeholders 
+• Hospital Administrators: Understand historical stay patterns for resource planning. 
+• Clinical Researchers: Study relationships between illness severity, diagnosis and stay duration. 
+• Data Analysts: Develop scalable healthcare data-processing workflows. 
+
+=== PAGE 3 ===
+ 
+ 
+• Academic Researchers: Explore Big Data applications in healthcare. 
+1.3 Analytical Questions 
+The project focuses on the following questions: 
+1. What is the average Length of Stay in the dataset? 
+2. How does stay duration vary across age groups? 
+3. Which admission types and severity levels have longer stays? 
+4. Which diagnosis categories have higher discharge counts? 
+5. Can machine learning estimate Length of Stay using available patient and admission attributes? 
+1.4 Why Big Data; Data Type 
+The dataset contains approximately 2.34 million records and 34 attributes. It includes demographic, hospital, 
+diagnosis, severity and financial information. 
+Its volume and variety make it suitable for distributed processing using Apache Spark. 
+The dataset is historical and static, not real-time streaming data 
+2. Recent Research Paper and Existing Approach 
+2.1 Selected Research Paper 
+Jain, R., Singh, M., Rao, A. R., and Garg, R. (2024). Predicting hospital length of stay using machine learning on 
+a large open health dataset. BMC Health Services Research, 24, 860. 
+DOI: https://doi.org/10.1186/s12913-024-11238-y 
+2.2 Problem, Dataset and Methodology 
+The research paper investigates the prediction of hospital Length of Stay using the New York State SPARCS 
+2016 inpatient discharge dataset. 
+The study uses machine learning techniques, including: 
+• Linear Regression 
+• Random Forest 
+• CatBoost 
+• Feature engineering 
+• SHAP for model interpretation 
+It separately analyses newborn and non-newborn patients and uses diagnosis classifications to understand 
+differences in stay duration. 
+
+=== PAGE 4 ===
+ 
+ 
+The paper reports its best regression \(R^2\) scores as: 
+• Newborn patients: 0.82 
+• Non-newborn patients: 0.432 
+These are the research paper's results, not the results of the present project. 
+2.3 Existing Approach, Limitations and Opportunity 
+The research demonstrates the use of machine learning for predicting hospital stay duration. However, long stays 
+represented by the top-coded 120 + category require careful handling. 
+This project focuses on a simpler and reproducible PySpark workflow, including data cleaning, statistical 
+analysis, diagnosis-wise comparisons and a Random Forest regression baseline. 
+It does not attempt to reproduce the paper's complete modelling or SHAP analysis.  
+SPARCS_2016_Big_Data_Analytics_Final_Assignment.docx 
+3. Objectives and Proposed Analysis 
+The main objectives are: 
+Objective Implementation 
+Dataset preparation Data ingestion, cleaning, missing-value analysis and duplicate removal 
+Scalable analysis PySpark and Spark SQL aggregations 
+Length of Stay analysis Comparison by age, diagnosis, admission type and severity 
+Prediction Random Forest regression using Spark MLlib 
+Evaluation MAE, RMSE and R² measurements 
+3.1 Relationship to the Paper 
+Both the research paper and this project use the SPARCS 2016 dataset to study hospital Length of Stay. 
+The research paper explores multiple machine learning approaches, while this project focuses on distributed 
+processing, descriptive analysis and a Random Forest regression baseline. 
+The published research results are used only for comparison 
+4. Dataset Identification and Preparation 
+4.1 Dataset and Source 
+The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2016. 
+It is published by the New York State Department of Health through Health Data NY. 
+
+=== PAGE 5 ===
+ 
+ 
+Sources: 
+• https://health.data.ny.gov/ 
+• https://www.health.ny.gov/statistics/sparcs/access/ 
+4.2 Verified Size, Format and Access 
+Attribute Details 
+Dataset Year 2016 
+Total Records 2,343,429 
+Number of Columns 34 
+Format CSV inside ZIP archive 
+Compressed Size Approximately 104.3 MiB 
+Access Public and de-identified 
+4.3 Important Attributes 
+Attribute Purpose 
+Length of Stay Main target variable 
+Age Group Age-wise analysis 
+Type of Admission Admission pattern analysis 
+CCS Diagnosis Code Diagnosis-wise analysis 
+APR Severity of Illness Severity comparison 
+APR Risk of Mortality Risk-category analysis 
+Facility ID Hospital-level analysis 
+Hospital County Geographic analysis 
+Total Charges and Costs Financial context; excluded from prediction 
+The 120 + value represents a top-coded stay duration and not an exact number of days. 
+4.4 Data Quality and Missing Values 
+The dataset contains missing values in several optional and categorical fields. 
+
+=== PAGE 6 ===
+ 
+ 
+Important observations include: 
+• 5,325 missing values in Hospital County and related geographic fields. 
+• 67 missing values in APR severity and risk descriptions. 
+• Several payment-related fields contain substantial missing data. 
+• 1,753 records contain the top-coded 120 + Length of Stay value. 
+These values must be handled carefully to avoid inaccurate analysis.  
+4.5 Preprocessing Plan 
+The following preprocessing steps are proposed: 
+1. Load the CSV using PySpark. 
+2. Standardize column values and identify missing data. 
+3. Convert numeric Length of Stay values into a numerical format. 
+4. Retain 120 + separately instead of treating it as an exact numeric value. 
+5. Remove exact duplicate records. 
+6. Handle missing categorical values using an Unknown category where appropriate. 
+7. Exclude records with invalid target values from regression training. 
+8. Exclude charges, costs and patient disposition from model predictors to prevent data leakage. 
+4.6 Big Data Characteristics 
+Characteristic Application 
+Volume More than 2.3 million records 
+Variety Demographic, medical, categorical and financial fields 
+Veracity Missing values and top-coded stay durations 
+Velocity Historical dataset; real-time velocity is not analysed 
+Value Useful insights for hospital operations and resource planning 
+5. Big Data Implementation and Workflow 
+5.1 Architecture and Workflow 
+The project follows these stages: 
+
+=== PAGE 7 ===
+ 
+ 
+Stage Operation 
+Data Ingestion Load SPARCS CSV using Spark 
+Data Cleaning Handle missing values and duplicates 
+Processing Transform fields and prepare features 
+Analysis Perform group-wise aggregations 
+Prediction Train Random Forest regression model 
+Evaluation Calculate model metrics and execution time 
+Apache Spark is used because it supports distributed data processing through DataFrames and Spark SQL. 
+Processed data is stored in Parquet format for efficient access. 
+5.2 Execution Steps 
+1. Install Java and Python. 
+2. Install PySpark using: 
+=> pip install pyspark 
+3. Extract the downloaded SPARCS ZIP file. 
+4. Prepare the PySpark analysis script. 
+5. Execute the script: 
+=> spark-submit sparcs_2016_pyspark_analysis.py path/to/2016.csv ./sparcs_output 
+6. Record the generated analysis, model metrics and execution time. 
+5.3 Executable Code 
+from pyspark.sql import SparkSession 
+from pyspark.sql import functions as F 
+from pyspark.ml import Pipeline 
+from pyspark.ml.feature import StringIndexer, VectorAssembler 
+from pyspark.ml.regression import RandomForestRegressor 
+from pyspark.ml.evaluation import RegressionEvaluator 
+import time 
+ 
+
+=== PAGE 8 ===
+ 
+ 
+start = time.time() 
+ 
+# 1. Initialize Spark 
+spark = SparkSession.builder.appName("SPARCS Analysis").getOrCreate() 
+ 
+# 2. Load dataset 
+df = spark.read.csv("Hospital_Inpatient_Discharges_2016.csv", 
+                    header=True, inferSchema=True) 
+ 
+print("Total Records:", df.count()) 
+df.printSchema() 
+ 
+# 3. Data cleaning 
+df = df.dropDuplicates() 
+ 
+df = df.withColumn( 
+    "LoS", 
+    F.when(F.trim(F.col("Length of Stay")).rlike(r"^[0-9]+$"), 
+           F.col("Length of Stay").cast("double")) 
+) 
+ 
+clean = df.filter(F.col("LoS").isNotNull()) 
+ 
+# 4. Data analysis 
+for col in ["Age Group", "Type of Admission", 
+            "APR Severity of Illness Description"]: 
+    clean.groupBy(col).agg( 
+        F.count("*").alias("Count"), 
+
+=== PAGE 9 ===
+ 
+ 
+        F.round(F.avg("LoS"), 2).alias("Average_LoS") 
+    ).show() 
+ 
+# 5. Prepare machine learning data 
+features = [ 
+    "Age Group", 
+    "Type of Admission", 
+    "APR Severity of Illness Description", 
+    "APR Risk of Mortality" 
+] 
+ 
+clean = clean.fillna("Unknown", subset=features) 
+ 
+indexers = [ 
+    StringIndexer(inputCol=c, outputCol=c+"_index", 
+                  handleInvalid="keep") 
+    for c in features 
+] 
+ 
+assembler = VectorAssembler( 
+    inputCols=[c+"_index" for c in features], 
+    outputCol="features" 
+) 
+ 
+rf = RandomForestRegressor( 
+    featuresCol="features", 
+    labelCol="LoS", 
+    numTrees=50, 
+
+=== PAGE 10 ===
+ 
+ 
+    seed=42 
+) 
+ 
+pipeline = Pipeline(stages=indexers + [assembler, rf]) 
+ 
+# 6. Training and testing 
+train, test = clean.randomSplit([0.8, 0.2], seed=42) 
+ 
+model = pipeline.fit(train) 
+predictions = model.transform(test) 
+ 
+# 7. Model evaluation 
+for metric in ["mae", "rmse", "r2"]: 
+    evaluator = RegressionEvaluator( 
+        labelCol="LoS", 
+        predictionCol="prediction", 
+        metricName=metric 
+    ) 
+    print(metric.upper(), ":", evaluator.evaluate(predictions)) 
+ 
+# 8. Save results and calculate performance 
+clean.write.mode("overwrite").parquet("cleaned_data") 
+ 
+print("Execution Time:", round(time.time()-start, 2), "seconds") 
+ 
+spark.stop() 
+ 
+ 
+
+=== PAGE 11 ===
+ 
+ 
+6. Results, Visualization and Paper Comparison 
+6.1 Dataset-Level Findings 
+The analysis of the uploaded dataset produced the following results: 
+Measure Result 
+Total Records 2,343,429 
+Numeric Length of Stay Records 2,341,676 
+Top-coded 120 + Records 1,753 
+Average Numeric Length of Stay 5.323 days 
+Minimum Stay 1 day 
+Maximum Numeric Stay 119 days 
+The average recorded stay is approximately 5.32 days. The top-coded records are excluded from these numeric 
+statistics. 
+6.2 Average Length of Stay by Age Group 
+The analysis shows that average stay duration generally increases across older age groups. 
+Age Group Average LoS 
+0–17 3.897 days 
+70 or older 6.201 days 
+This suggests an association between older age categories and longer hospital stays. It does not establish that age 
+directly causes longer stays.  
+6.3 Average Length of Stay by Severity 
+APR Severity Average LoS 
+Minor 3.084 days 
+Moderate 4.709 days 
+Major 6.993 days 
+Extreme 14.574 days 
+
+=== PAGE 12 ===
+ 
+ 
+Patients in the Extreme severity category have considerably longer average stays than those in the Minor 
+category. 
+6.4 Average Length of Stay by Admission Type 
+Admission Type Average LoS 
+Newborn 3.638 days 
+Elective 4.533 days 
+Emergency 5.745 days 
+Urgent 5.827 days 
+Trauma 6.269 days 
+Trauma and urgent admissions show higher average stay durations than elective and newborn admissions. 
+6.5 Diagnosis Examples 
+Diagnosis Category Discharges with Numeric LoS Average LoS 
+Liveborn 224,404 3.62 days 
+Septicemia 110,942 9.01 days 
+Osteoarthritis 67,235 2.78 days 
+Mood Disorders 54,136 9.79 days 
+Alcohol-related Disorders 50,444 5.95 days 
+Schizophrenia and Other Psychotic Disorders 42,118 16.06 days 
+The results show considerable variation in stay duration across diagnosis categories. These are descriptive 
+statistics and should not be interpreted as individual patient predictions 
+6.6 Comparison with the Research Paper 
+Aspect Research Paper Present Project 
+Dataset SPARCS 2016 SPARCS 2016 
+Main Focus Length of Stay prediction Analysis and prediction 
+Methods Linear Regression, Random Forest, CatBoost PySpark and Random Forest 
+
+=== PAGE 13 ===
+ 
+ 
+Analysis Newborn and non-newborn groups Age, severity, admission and diagnosis 
+Evaluation Multiple regression and classification metrics MAE, RMSE and R² 
+The project follows the same broad research problem but uses a different implementation scope. Its model 
+performance must be evaluated independently. 
+7. Performance Evaluation and Observations 
+7.1 Evaluation Measures 
+The model will be evaluated using the following metrics: 
+Metric Purpose 
+MAE Measures average absolute prediction error 
+RMSE Penalizes larger prediction errors 
+R² Measures how much variation is explained by the model 
+Execution Time Measures processing duration 
+The dataset is divided into training and testing sets using an 80:20 split. 
+Actual model scores must be added after executing the PySpark implementation. 
+7.2 Limitations and Improvements 
+The project has the following limitations: 
+• The dataset represents New York hospitals and may not reflect other healthcare systems. 
+• It contains historical discharge records, not live hospital occupancy data. 
+• Missing values and top-coded stay durations affect analysis. 
+• Length of Stay depends on several factors not available in the dataset. 
+• Model predictions may reflect biases present in historical data. 
+• The project is educational and should not be used for clinical decisions. 
+Future improvements may include testing additional machine learning algorithms, applying model explainability 
+techniques and incorporating more recent datasets. 
+8. Tools, Responsible Use and References 
+8.1 Tools and Technologies 
+Category Technology 
+
+=== PAGE 14 ===
+ 
+ 
+Programming Language Python 
+Big Data Framework Apache Spark / PySpark 
+Data Processing Spark SQL and DataFrames 
+Machine Learning Spark MLlib 
+Storage CSV and Parquet 
+Visualization Matplotlib 
+Development Environment VS Code / Jupyter Notebook 
+8.2 Responsible Use 
+The project follows these principles: 
+• Use only publicly available, de-identified patient data. 
+• Do not attempt to identify individual patients. 
+• Avoid publishing patient-level records. 
+• Preserve the original dataset for reproducibility. 
+• Do not treat model predictions as medical advice. 
+• Clearly acknowledge the dataset's limitations. 
+ 
+
+=== PAGE 15 ===
+ 
+ 
+ 
+8.3 References 
+1. Jain, R., Singh, M., Rao, A. R., and Garg, R. (2024). Predicting hospital length of stay using machine learning 
+on a large open health dataset. BMC Health Services Research, 24, 860. https://doi.org/10.1186/s12913-024-
+11238-y 
+2. New York State Department of Health. SPARCS Data Access. 
+https://www.health.ny.gov/statistics/sparcs/access/ 
+3. Health Data NY. New York State Open Data Portal. https://health.data.ny.gov/ 
+4. Apache Software Foundation. Apache Spark Documentation. https://spark.apache.org/docs/latest/ 
+Conclusion 
+This project demonstrates the application of Big Data Analytics to hospital Length of Stay analysis using the 
+SPARCS 2016 dataset. 
+The analysis identifies differences in stay duration across age groups, admission types, diagnosis categories and 
+illness severity. PySpark provides a scalable approach to processing the large dataset, while Random Forest 
+regression offers a baseline for exploring Length of Stay prediction. 
+The findings can support historical healthcare analysis and resource-planning discussions. However, the results 
+are limited to the available dataset and should not be treated as real-time hospital measurements or clinical 
+recommendations. 
+

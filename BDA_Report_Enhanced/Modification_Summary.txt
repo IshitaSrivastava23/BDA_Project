@@ -1,0 +1,15 @@
+BDA Report Enhancement Modification Summary
+===========================================
+Source report: BDA_Report_Final_Reference_Style.docx
+Final document: BDA_Report_Enhanced.docx
+Source dataset: Hospital_Inpatient_Discharges_(SPARCS_De-Identified)__2016_20261101.csv
+Verified record count: 2,343,429
+Numeric LoS records: 2,341,676
+Top-coded 120+ records: 1,753
+Sections improved: report appendix added; model-evaluation status corrected.
+Actual-data charts added: 8.
+Technical diagrams newly added: 0 (existing 13 academic figures retained).
+Screenshots incorporated: 0 (no project screenshots were present in the report workspace).
+Simulated model image replaced: Yes.
+PDF preview created: Yes.
+Missing or unresolved: fitted Spark MLlib model metrics and actual-versus-predicted artifacts were not found, so no MAE, RMSE, R-squared, or prediction graph was fabricated.

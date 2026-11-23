@@ -1,0 +1,16 @@
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+backend/**/__pycache__/
+backend/.env
+.venv/
+*.py[cod]
+HospitalAnalytics/data/raw/
+HospitalAnalytics/data/processed/
+HospitalAnalytics/models/
+HospitalAnalytics/outputs/
+HospitalAnalytics/.venv/
+**/__pycache__/
+.pytest_cache/
+*.lock
+~$*
