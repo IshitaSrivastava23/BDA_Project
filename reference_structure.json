@@ -656,7 +656,7 @@
             ]
           },
           {
-            "text": "the publicly available New York State SPARCS 2016 dataset, containing over 2.3 million records and 34",
+            "text": "the publicly available New York State SPARCS 2023 dataset, containing over 2.3 million records and 34",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -862,7 +862,7 @@
             ]
           },
           {
-            "text": "SPARCS 2016 Inpatient Discharges",
+            "text": "SPARCS 2023 Inpatient Discharges",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -1846,7 +1846,7 @@
             ]
           },
           {
-            "text": "2016 inpatient discharge dataset.",
+            "text": "2023 inpatient discharge dataset.",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -2397,7 +2397,7 @@
         ],
         "lines": [
           {
-            "text": "SPARCS_2016_Big_Data_Analytics_Final_Assignment.docx",
+            "text": "SPARCS_2023_Big_Data_Analytics_Final_Assignment.docx",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -2692,7 +2692,7 @@
         ],
         "lines": [
           {
-            "text": "Both the research paper and this project use the SPARCS 2016 dataset to study hospital Length of Stay.",
+            "text": "Both the research paper and this project use the SPARCS 2023 dataset to study hospital Length of Stay.",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -2820,7 +2820,7 @@
         ],
         "lines": [
           {
-            "text": "The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2016.",
+            "text": "The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2023.",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -3086,7 +3086,7 @@
             ]
           },
           {
-            "text": "2016",
+            "text": "2023",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -4988,7 +4988,7 @@
             ]
           },
           {
-            "text": "=> spark-submit sparcs_2016_pyspark_analysis.py path/to/2016.csv ./sparcs_output",
+            "text": "=> spark-submit sparcs_2023_pyspark_analysis.py path/to/2023.csv ./sparcs_output",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -5432,7 +5432,7 @@
         ],
         "lines": [
           {
-            "text": "df = spark.read.csv(\"Hospital_Inpatient_Discharges_2016.csv\",",
+            "text": "df = spark.read.csv(\"Hospital_Inpatient_Discharges_2023.csv\",",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -8973,7 +8973,7 @@
             ]
           },
           {
-            "text": "SPARCS 2016",
+            "text": "SPARCS 2023",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -8986,7 +8986,7 @@
             ]
           },
           {
-            "text": "SPARCS 2016",
+            "text": "SPARCS 2023",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,
@@ -10763,7 +10763,7 @@
             ]
           },
           {
-            "text": "SPARCS 2016 dataset.",
+            "text": "SPARCS 2023 dataset.",
             "font": "TimesNewRomanPSMT",
             "size": 11.0,
             "flags": 4,

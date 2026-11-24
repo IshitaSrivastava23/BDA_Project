@@ -44,7 +44,7 @@ def generate_fig1():
     # Tiers / Layers
     tiers = [
         ("Tier 1: Data Ingestion & Storage", 5, 78, 90, 12, '#E2E8F0', '#0F172A', [
-            ("SPARCS 2016 CSV\n(2.34M Records, 34 Attributes)", 6.5, 79.5, 26, 9, '#FFFFFF', '#1E3A8A'),
+            ("SPARCS 2023 CSV\n(2.34M Records, 34 Attributes)", 6.5, 79.5, 26, 9, '#FFFFFF', '#1E3A8A'),
             ("Schema Normalization\n(Snake_case alias mapping)", 37, 79.5, 26, 9, '#FFFFFF', '#1E3A8A'),
             ("Cleaned Parquet Storage\n(Columnar, Snappy Compressed)", 67.5, 79.5, 26, 9, '#FFFFFF', '#1E3A8A')
         ]),
@@ -251,7 +251,7 @@ def generate_fig4():
     for i, pct in enumerate(completeness_pct):
         ax2.text(pct - 0.08, i, f"{pct:.3f}%", va='center', ha='right', fontsize=7.5, color='#FFFFFF', fontweight='bold')
 
-    plt.suptitle("NY SPARCS 2016 Inpatient Discharges Data Quality & Completeness Audit (N = 2,343,429)", 
+    plt.suptitle("NY SPARCS 2023 Inpatient Discharges Data Quality & Completeness Audit (N = 2,343,429)", 
                  fontsize=11.5, fontweight='bold', y=0.98, color='#0F172A')
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / "fig4_missing_values_audit.png", dpi=300, bbox_inches='tight')
@@ -286,7 +286,7 @@ def generate_fig5():
     # Right panel: KPI Cards / Summary Statistics
     ax2.axis('off')
     kpis = [
-        ("Total Inpatient Discharges", "2,343,429", "Comprehensive statewide 2016 cohort", "#EFF6FF", "#1D4ED8"),
+        ("Total Inpatient Discharges", "2,343,429", "Comprehensive statewide 2023 cohort", "#EFF6FF", "#1D4ED8"),
         ("Valid Numeric LoS Cohort", "2,341,676", "Trained on regression baseline", "#ECFDF5", "#047857"),
         ("Top-Coded Stays (120+ Days)", "1,753", "Isolated to prevent distribution skew", "#FFFBEB", "#B45309"),
         ("Mean Numeric Stay Duration", "5.323 Days", "Standard average hospital duration", "#F5F3FF", "#6D28D9"),
@@ -303,7 +303,7 @@ def generate_fig5():
         ax2.text(0.1, y - 0.11, sub, fontsize=7.5, style='italic', color='#64748B')
         y -= 0.18
 
-    plt.suptitle("NY SPARCS 2016 Dataset Overview & Target Variable Summary", fontsize=12, fontweight='bold', y=0.98, color='#0F172A')
+    plt.suptitle("NY SPARCS 2023 Dataset Overview & Target Variable Summary", fontsize=12, fontweight='bold', y=0.98, color='#0F172A')
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / "fig5_dataset_los_classification.png", dpi=300, bbox_inches='tight')
     plt.close()
@@ -339,7 +339,7 @@ def generate_fig6():
     ax.set_ylim(0, 7.5)
     ax.set_xlabel('Patient Age Group', fontsize=10, fontweight='bold', color='#1E293B', labelpad=8)
     ax.set_ylabel('Average Length of Stay (Days)', fontsize=10, fontweight='bold', color='#1E293B', labelpad=8)
-    ax.set_title('Average Hospital Stay Duration Across Age Cohorts (SPARCS 2016)', fontsize=11.5, fontweight='bold', color='#0F172A', pad=12)
+    ax.set_title('Average Hospital Stay Duration Across Age Cohorts (SPARCS 2023)', fontsize=11.5, fontweight='bold', color='#0F172A', pad=12)
     ax.legend(loc='upper left', fontsize=8.5)
     
     # Annotations
@@ -468,7 +468,7 @@ def generate_fig9():
         ax2.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height()/2, f"{l:.2f} d", 
                  va='center', fontsize=8, color='#0F172A', fontweight='bold')
 
-    plt.suptitle("Clinical Diagnosis Patterns: Inpatient Volume vs. Mean Stay Duration (SPARCS 2016)", 
+    plt.suptitle("Clinical Diagnosis Patterns: Inpatient Volume vs. Mean Stay Duration (SPARCS 2023)", 
                  fontsize=11.5, fontweight='bold', y=0.98, color='#0F172A')
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / "fig9_top_diagnoses_analysis.png", dpi=300, bbox_inches='tight')
@@ -557,7 +557,7 @@ def generate_fig11():
     # Table layout comparing Benchmark vs Present Project
     data = [
         ["Dimension", "Benchmark Paper (Jain et al., 2024)", "Present PySpark Project"],
-        ["Target Dataset", "NY SPARCS 2016 Inpatient Discharges", "NY SPARCS 2016 Inpatient Discharges"],
+        ["Target Dataset", "NY SPARCS 2023 Inpatient Discharges", "NY SPARCS 2023 Inpatient Discharges"],
         ["Core Architecture", "Single-node Python (Scikit-Learn, CatBoost)", "Distributed Apache Spark / PySpark 3.5"],
         ["Cohort Partition", "Disjoint Newborn vs. Non-Newborn Models", "Unified Inpatient Cohort (with Age/Type features)"],
         ["Top-Coded 120+ Stays", "Capped or Log-transformed within models", "Explicitly Isolated (Audit only; excluded from regression)"],
@@ -655,13 +655,13 @@ def generate_fig13():
     ax.axis('off')
     ax.add_patch(patches.Rectangle((0, 0), 100, 100, facecolor='#F8FAFC', edgecolor='none'))
 
-    ax.text(50, 95, "The 5 V's of Big Data in SPARCS 2016 Healthcare Inpatient Analytics", 
+    ax.text(50, 95, "The 5 V's of Big Data in SPARCS 2023 Healthcare Inpatient Analytics", 
             ha='center', va='center', fontsize=13, fontweight='bold', color='#0F172A')
 
     vs = [
         ("VOLUME", "2,343,429 Inpatient Records\n34 Attributes, ~104.3 MiB ZIP\nExceeds single-threaded memory capacity;\nnecessitates Apache Spark cluster parallelism.", 5, 52, 28, 36, '#EFF6FF', '#1D4ED8'),
         ("VARIETY", "Heterogeneous Attributes\nDemographics (Age, Gender), Clinical\n(CCS Codes, APR Severity, Risk of Mortality),\nand Administrative/Financial data types.", 36, 52, 28, 36, '#F0FDF4', '#15803D'),
-        ("VELOCITY", "Static Historical Batch\nComprehensive retrospective 2016 cohort.\nEvaluates operational patterns rather than\nreal-time sub-second patient telemetry streams.", 67, 52, 28, 36, '#FAF5FF', '#7E22CE'),
+        ("VELOCITY", "Static Historical Batch\nComprehensive retrospective 2023 cohort.\nEvaluates operational patterns rather than\nreal-time sub-second patient telemetry streams.", 67, 52, 28, 36, '#FAF5FF', '#7E22CE'),
         ("VERACITY", "Data Quality & Leakage\nHandles 5,325 geographic missing values,\n67 severity missing entries, top-coded 120+\nrecords, and quarantines post-discharge costs.", 20.5, 10, 28, 36, '#FFFBEB', '#B45309'),
         ("VALUE", "Hospital Operational Planning\nProvides objective empirical baselines for\nbed allocation, ICU capacity forecasting,\nstaff scheduling, and high-stay risk triage.", 51.5, 10, 28, 36, '#FEF2F2', '#B91C1C')
     ]

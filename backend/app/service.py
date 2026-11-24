@@ -93,14 +93,14 @@ class AnalyticsService:
         if not self.available:
             return {
                 "data_available": False,
-                "source": "NYS SPARCS 2016 Inpatient Discharges",
+                "source": "NYS SPARCS 2023 Inpatient Discharges",
                 "message": "No local CSV or cleaned Parquet dataset was found.",
                 "columns": [],
             }
         frame = self._load()
         return {
             "data_available": True,
-            "source": "NYS SPARCS 2016 Inpatient Discharges",
+            "source": "NYS SPARCS 2023 Inpatient Discharges",
             "rows": int(len(frame)),
             "column_count": int(len(frame.columns)),
             "columns": self.columns()["items"],

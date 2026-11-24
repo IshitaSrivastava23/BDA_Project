@@ -27,7 +27,7 @@ Ishita Srivastava 1MS24CS070
  
 Project Overview 
 This project analyses hospital inpatient discharge records to understand and predict Length of Stay (LoS). It uses 
-the publicly available New York State SPARCS 2016 dataset, containing over 2.3 million records and 34 
+the publicly available New York State SPARCS 2023 dataset, containing over 2.3 million records and 34 
 attributes. 
 Apache Spark and PySpark are used for data cleaning, processing, aggregation and exploratory machine 
 learning. The analysis examines how hospital stay duration varies across age groups, admission types, diagnosis 
@@ -36,7 +36,7 @@ The project aims to demonstrate how Big Data technologies can support historical
 resource planning. It does not calculate live bed occupancy or provide clinical recommendations. 
 Project Element Description 
 Domain Healthcare Analytics 
-Dataset SPARCS 2016 Inpatient Discharges 
+Dataset SPARCS 2023 Inpatient Discharges 
 Main Objective Length of Stay analysis and prediction 
 Technology Python, PySpark, Spark SQL, Spark MLlib 
 Data Type Historical, structured and de-identified 
@@ -79,7 +79,7 @@ a large open health dataset. BMC Health Services Research, 24, 860.
 DOI: https://doi.org/10.1186/s12913-024-11238-y 
 2.2 Problem, Dataset and Methodology 
 The research paper investigates the prediction of hospital Length of Stay using the New York State SPARCS 
-2016 inpatient discharge dataset. 
+2023 inpatient discharge dataset. 
 The study uses machine learning techniques, including: 
 • Linear Regression 
 • Random Forest 
@@ -102,7 +102,7 @@ represented by the top-coded 120 + category require careful handling.
 This project focuses on a simpler and reproducible PySpark workflow, including data cleaning, statistical 
 analysis, diagnosis-wise comparisons and a Random Forest regression baseline. 
 It does not attempt to reproduce the paper's complete modelling or SHAP analysis.  
-SPARCS_2016_Big_Data_Analytics_Final_Assignment.docx 
+SPARCS_2023_Big_Data_Analytics_Final_Assignment.docx 
 3. Objectives and Proposed Analysis 
 The main objectives are: 
 Objective Implementation 
@@ -112,13 +112,13 @@ Length of Stay analysis Comparison by age, diagnosis, admission type and severit
 Prediction Random Forest regression using Spark MLlib 
 Evaluation MAE, RMSE and R² measurements 
 3.1 Relationship to the Paper 
-Both the research paper and this project use the SPARCS 2016 dataset to study hospital Length of Stay. 
+Both the research paper and this project use the SPARCS 2023 dataset to study hospital Length of Stay. 
 The research paper explores multiple machine learning approaches, while this project focuses on distributed 
 processing, descriptive analysis and a Random Forest regression baseline. 
 The published research results are used only for comparison 
 4. Dataset Identification and Preparation 
 4.1 Dataset and Source 
-The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2016. 
+The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2023. 
 It is published by the New York State Department of Health through Health Data NY. 
 
 === PAGE 5 ===
@@ -129,7 +129,7 @@ Sources:
 • https://www.health.ny.gov/statistics/sparcs/access/ 
 4.2 Verified Size, Format and Access 
 Attribute Details 
-Dataset Year 2016 
+Dataset Year 2023 
 Total Records 2,343,429 
 Number of Columns 34 
 Format CSV inside ZIP archive 
@@ -199,7 +199,7 @@ Processed data is stored in Parquet format for efficient access.
 3. Extract the downloaded SPARCS ZIP file. 
 4. Prepare the PySpark analysis script. 
 5. Execute the script: 
-=> spark-submit sparcs_2016_pyspark_analysis.py path/to/2016.csv ./sparcs_output 
+=> spark-submit sparcs_2023_pyspark_analysis.py path/to/2023.csv ./sparcs_output 
 6. Record the generated analysis, model metrics and execution time. 
 5.3 Executable Code 
 from pyspark.sql import SparkSession 
@@ -220,7 +220,7 @@ start = time.time()
 spark = SparkSession.builder.appName("SPARCS Analysis").getOrCreate() 
  
 # 2. Load dataset 
-df = spark.read.csv("Hospital_Inpatient_Discharges_2016.csv", 
+df = spark.read.csv("Hospital_Inpatient_Discharges_2023.csv", 
                     header=True, inferSchema=True) 
  
 print("Total Records:", df.count()) 
@@ -361,7 +361,7 @@ The results show considerable variation in stay duration across diagnosis catego
 statistics and should not be interpreted as individual patient predictions 
 6.6 Comparison with the Research Paper 
 Aspect Research Paper Present Project 
-Dataset SPARCS 2016 SPARCS 2016 
+Dataset SPARCS 2023 SPARCS 2023 
 Main Focus Length of Stay prediction Analysis and prediction 
 Methods Linear Regression, Random Forest, CatBoost PySpark and Random Forest 
 
@@ -430,7 +430,7 @@ https://www.health.ny.gov/statistics/sparcs/access/
 4. Apache Software Foundation. Apache Spark Documentation. https://spark.apache.org/docs/latest/ 
 Conclusion 
 This project demonstrates the application of Big Data Analytics to hospital Length of Stay analysis using the 
-SPARCS 2016 dataset. 
+SPARCS 2023 dataset. 
 The analysis identifies differences in stay duration across age groups, admission types, diagnosis categories and 
 illness severity. PySpark provides a scalable approach to processing the large dataset, while Random Forest 
 regression offers a baseline for exploring Length of Stay prediction. 

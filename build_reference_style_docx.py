@@ -347,7 +347,7 @@ def build_reference_style_document():
     add_heading(doc, "Project Overview", space_before=0)
     add_body_paragraph(
         doc,
-        "This project analyses hospital inpatient discharge records to understand and predict Length of Stay (LoS). It uses the publicly available New York State SPARCS 2016 dataset, containing over 2.3 million records and 34 attributes."
+        "This project analyses hospital inpatient discharge records to understand and predict Length of Stay (LoS). It uses the publicly available New York State SPARCS 2023 dataset, containing over 2.3 million records and 34 attributes."
     )
     add_body_paragraph(
         doc,
@@ -366,7 +366,7 @@ def build_reference_style_document():
     
     elem_data = [
         ("Domain", "Healthcare Analytics"),
-        ("Dataset", "SPARCS 2016 Inpatient Discharges"),
+        ("Dataset", "SPARCS 2023 Inpatient Discharges"),
         ("Main Objective", "Length of Stay analysis and prediction"),
         ("Technology", "Python, PySpark, Spark SQL, Spark MLlib"),
         ("Data Type", "Historical, structured and de-identified"),
@@ -442,13 +442,13 @@ def build_reference_style_document():
     add_figure(
         doc,
         "fig13_big_data_5vs.png",
-        "Fig. 2. The 5 V's of Big Data Applied Specifically to the SPARCS 2016 Healthcare Inpatient Dataset.",
+        "Fig. 2. The 5 V's of Big Data Applied Specifically to the SPARCS 2023 Healthcare Inpatient Dataset.",
         width_inches=6.2
     )
 
     add_body_paragraph(
         doc,
-        "Fig. 2 summarizes the application of the five Big Data dimensions (Volume, Variety, Velocity, Veracity, and Value) to the SPARCS 2016 inpatient discharges analysis. Distributed execution resolves memory bottlenecks while addressing data veracity constraints."
+        "Fig. 2 summarizes the application of the five Big Data dimensions (Volume, Variety, Velocity, Veracity, and Value) to the SPARCS 2023 inpatient discharges analysis. Distributed execution resolves memory bottlenecks while addressing data veracity constraints."
     )
 
     # =========================================================================
@@ -469,7 +469,7 @@ def build_reference_style_document():
     add_heading(doc, "2.2 Problem, Dataset and Methodology", space_before=8)
     add_body_paragraph(
         doc,
-        "The research paper investigates the prediction of hospital Length of Stay using the New York State SPARCS 2016 inpatient discharge dataset."
+        "The research paper investigates the prediction of hospital Length of Stay using the New York State SPARCS 2023 inpatient discharge dataset."
     )
     add_body_paragraph(doc, "The study uses machine learning techniques, including:")
     add_bullet_item(doc, "Linear Regression")
@@ -543,7 +543,7 @@ def build_reference_style_document():
     add_heading(doc, "3.1 Relationship to the Paper", space_before=8)
     add_body_paragraph(
         doc,
-        "Both the research paper and this project use the SPARCS 2016 dataset to study hospital Length of Stay."
+        "Both the research paper and this project use the SPARCS 2023 dataset to study hospital Length of Stay."
     )
     add_body_paragraph(
         doc,
@@ -562,7 +562,7 @@ def build_reference_style_document():
     add_heading(doc, "4.1 Dataset and Source", space_before=8)
     add_body_paragraph(
         doc,
-        "The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2016."
+        "The selected dataset is Hospital Inpatient Discharges (SPARCS De-Identified): 2023."
     )
     add_body_paragraph(
         doc,
@@ -579,7 +579,7 @@ def build_reference_style_document():
     t_vf.cell(0, 1).paragraphs[0].text = "Details"
     
     vf_data = [
-        ("Dataset Year", "2016"),
+        ("Dataset Year", "2023"),
         ("Total Records", "2,343,429"),
         ("Number of Columns", "34"),
         ("Format", "CSV inside ZIP archive"),
@@ -637,7 +637,7 @@ def build_reference_style_document():
     add_figure(
         doc,
         "fig4_missing_values_audit.png",
-        "Fig. 4. Missing Values Audit and Data Completeness Ratio Across SPARCS 2016 Attributes.",
+        "Fig. 4. Missing Values Audit and Data Completeness Ratio Across SPARCS 2023 Attributes.",
         width_inches=6.2
     )
 
@@ -651,7 +651,7 @@ def build_reference_style_document():
 
     add_body_paragraph(
         doc,
-        "As visualized in Fig. 4 and Fig. 5, the SPARCS 2016 dataset exhibits over 99.7% completeness across primary clinical features. Valid numeric LoS records comprise 2,341,676 discharges (99.93%), while 1,753 top-coded records (0.07%) are isolated to preserve regression validity."
+        "As visualized in Fig. 4 and Fig. 5, the SPARCS 2023 dataset exhibits over 99.7% completeness across primary clinical features. Valid numeric LoS records comprise 2,341,676 discharges (99.93%), while 1,753 top-coded records (0.07%) are isolated to preserve regression validity."
     )
 
     add_heading(doc, "4.5 Preprocessing Plan", space_before=8)
@@ -749,7 +749,7 @@ def build_reference_style_document():
     add_numbered_item(doc, "2.", "Install PySpark using:\n=> pip install pyspark")
     add_numbered_item(doc, "3.", "Extract the downloaded SPARCS ZIP file.")
     add_numbered_item(doc, "4.", "Prepare the PySpark analysis script.")
-    add_numbered_item(doc, "5.", "Execute the script:\n=> spark-submit sparcs_2016_pyspark_analysis.py path/to/2016.csv ./sparcs_output")
+    add_numbered_item(doc, "5.", "Execute the script:\n=> spark-submit sparcs_2023_pyspark_analysis.py path/to/2023.csv ./sparcs_output")
     add_numbered_item(doc, "6.", "Record the generated analysis, model metrics and execution time.")
 
     add_heading(doc, "5.3 Executable Code", space_before=8)
@@ -769,7 +769,7 @@ def build_reference_style_document():
         "spark = SparkSession.builder.appName(\"SPARCS Analysis\").getOrCreate()",
         "",
         "# 2. Load dataset",
-        "df = spark.read.csv(\"Hospital_Inpatient_Discharges_2016.csv\",",
+        "df = spark.read.csv(\"Hospital_Inpatient_Discharges_2023.csv\",",
         "                    header=True, inferSchema=True)",
         "",
         "print(\"Total Records:\", df.count())",
@@ -1025,7 +1025,7 @@ def build_reference_style_document():
     t_cp.cell(0, 2).paragraphs[0].text = "Present Project"
     
     cp_data = [
-        ("Dataset", "SPARCS 2016", "SPARCS 2016"),
+        ("Dataset", "SPARCS 2023", "SPARCS 2023"),
         ("Main Focus", "Length of Stay prediction", "Analysis and prediction"),
         ("Methods", "Linear Regression, Random Forest, CatBoost", "PySpark and Random Forest"),
         ("Analysis", "Newborn and non-newborn groups", "Age, severity, admission and diagnosis"),
@@ -1156,7 +1156,7 @@ def build_reference_style_document():
     add_heading(doc, "Conclusion", space_before=12)
     add_body_paragraph(
         doc,
-        "This project demonstrates the application of Big Data Analytics to hospital Length of Stay analysis using the SPARCS 2016 dataset."
+        "This project demonstrates the application of Big Data Analytics to hospital Length of Stay analysis using the SPARCS 2023 dataset."
     )
     add_body_paragraph(
         doc,

@@ -14,3 +14,4 @@ HospitalAnalytics/.venv/
 .pytest_cache/
 *.lock
 ~$*
+.venv311/

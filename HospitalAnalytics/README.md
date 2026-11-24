@@ -1,6 +1,6 @@
 # Hospital Length of Stay Analytics
 
-Apache Spark/PySpark analytics for the New York State SPARCS 2016 Inpatient Discharges dataset. The project cleans and summarizes inpatient discharge data and trains a leakage-aware Random Forest regression model for numeric length of stay.
+Apache Spark/PySpark analytics for the New York State SPARCS 2023 Inpatient Discharges dataset. The project cleans and summarizes inpatient discharge data and trains a leakage-aware Random Forest regression model for numeric length of stay.
 
 ## Status
 
@@ -13,14 +13,14 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m pytest
-python -m src.main --input data/raw/Hospital_Inpatient_Discharges_2016.csv
+python -m src.main --input data/raw/Hospital_Inpatient_Discharges_2023.csv
 ```
 
 PySpark requires a compatible Java runtime (Java 8, 11, or 17 are commonly supported by the selected Spark release). Confirm `java -version` before running the pipeline.
 
 ## Dataset
 
-Download the de-identified New York State SPARCS 2016 Inpatient Discharges CSV from the New York State Health Data repository. The exact file is not committed because it is large and externally maintained. See [data/README.md](data/README.md) for placement and schema notes.
+Download the de-identified New York State SPARCS 2023 Inpatient Discharges CSV from the New York State Health Data repository. The exact file is not committed because it is large and externally maintained. See [data/README.md](data/README.md) for placement and schema notes.
 
 ## What the pipeline does
 
@@ -59,7 +59,7 @@ tests/                    Small synthetic-data unit tests
 Install Python dependencies with `pip install -r requirements.txt`. For a normal laptop, the CLI defaults to local Spark with a conservative driver memory setting:
 
 ```powershell
-python -m src.main --input .\data\raw\Hospital_Inpatient_Discharges_2016.csv --output-dir .\outputs
+python -m src.main --input .\data\raw\Hospital_Inpatient_Discharges_2023.csv --output-dir .\outputs
 ```
 
 Useful options include `--master`, `--shuffle-partitions`, `--analysis-only`, `--model-only`, `--no-cache`, and `--log-level`. Use `python -m src.main --help` for the full list.

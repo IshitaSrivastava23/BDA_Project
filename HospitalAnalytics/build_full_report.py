@@ -116,7 +116,7 @@ def build_report():
     
     add_paragraph(
         doc,
-        "Modern healthcare institutions are under perpetual pressure to optimize clinical resource allocation, manage inpatient bed capacity, and control escalating operational expenses while preserving clinical efficacy. This project investigates hospital inpatient discharge records to understand and model the dynamics of hospital Length of Stay (LoS). Utilizing the publicly available New York State Statewide Planning and Research Cooperative System (SPARCS) 2016 Inpatient Discharges dataset—comprising 2,343,429 historical discharge records across 34 clinical, administrative, and financial attributes—this study implements an end-to-end distributed Big Data analytics workflow utilizing Apache Spark, PySpark SQL, and Spark MLlib.",
+        "Modern healthcare institutions are under perpetual pressure to optimize clinical resource allocation, manage inpatient bed capacity, and control escalating operational expenses while preserving clinical efficacy. This project investigates hospital inpatient discharge records to understand and model the dynamics of hospital Length of Stay (LoS). Utilizing the publicly available New York State Statewide Planning and Research Cooperative System (SPARCS) 2023 Inpatient Discharges dataset—comprising 2,343,429 historical discharge records across 34 clinical, administrative, and financial attributes—this study implements an end-to-end distributed Big Data analytics workflow utilizing Apache Spark, PySpark SQL, and Spark MLlib.",
         bold_prefix="Executive Summary: "
     )
     
@@ -135,7 +135,7 @@ def build_report():
     
     elem_data = [
         ("Domain & Focus", "Healthcare Analytics, Hospital Operations, Inpatient Resource Utilization"),
-        ("Benchmark Dataset", "New York State SPARCS 2016 De-Identified Inpatient Discharges (Health Data NY)"),
+        ("Benchmark Dataset", "New York State SPARCS 2023 De-Identified Inpatient Discharges (Health Data NY)"),
         ("Primary Objective", "Distributed cleaning, empirical Length of Stay analysis, and predictive baseline regression"),
         ("Technology Stack", "Python 3.11+, Apache Spark 3.5.3, PySpark DataFrames, Spark SQL, Spark MLlib"),
         ("Data Modality", "Historical, highly structured, multi-category tabular records (HIPAA de-identified)"),
@@ -193,7 +193,7 @@ def build_report():
 
     add_heading_2(doc, "1.3 Analytical Research Questions")
     add_paragraph(doc, "To maintain rigorous academic focus, the research addresses five central investigative questions:")
-    add_bullet(doc, "What is the global mean and median Length of Stay across the entire 2016 inpatient cohort, and how does the distribution behave when top-coded entries are mathematically isolated?", bold_title="Question 1 (Global Empirical Baseline)")
+    add_bullet(doc, "What is the global mean and median Length of Stay across the entire 2023 inpatient cohort, and how does the distribution behave when top-coded entries are mathematically isolated?", bold_title="Question 1 (Global Empirical Baseline)")
     add_bullet(doc, "To what extent does inpatient stay duration scale across progressive age cohorts, and what is the empirical gap between pediatric and geriatric populations?", bold_title="Question 2 (Age Demographic Dynamics)")
     add_bullet(doc, "How do clinical admission types (Elective, Emergency, Urgent, Trauma, Newborn) and APR Severity of Illness levels dictate hospital resource utilization?", bold_title="Question 3 (Acuity and Admission Trajectories)")
     add_bullet(doc, "Which primary clinical diagnosis categories account for the largest cumulative bed-day volume, and which rare or complex conditions exhibit the highest mean durations?", bold_title="Question 4 (Clinical Category Strata)")
@@ -202,7 +202,7 @@ def build_report():
     add_heading_2(doc, "1.4 Why Big Data; Data Modality and Characteristics")
     add_paragraph(
         doc,
-        "The SPARCS 2016 dataset encompasses 2,343,429 individual discharge records spanning 34 attributes, generating a multi-gigabyte memory footprint upon distributed schema inference and vectorization. Traditional single-node data manipulation libraries (such as pure Python lists or in-memory single-threaded Pandas instances) face severe memory paging constraints and prohibitive execution latencies when executing full-dataset deduplication, string indexing, and multi-tree ensemble training. Apache Spark's distributed Resilient Distributed Dataset (RDD) abstraction and Catalyst Query Optimizer provide the requisite parallel execution fabric across worker cores."
+        "The SPARCS 2023 dataset encompasses 2,343,429 individual discharge records spanning 34 attributes, generating a multi-gigabyte memory footprint upon distributed schema inference and vectorization. Traditional single-node data manipulation libraries (such as pure Python lists or in-memory single-threaded Pandas instances) face severe memory paging constraints and prohibitive execution latencies when executing full-dataset deduplication, string indexing, and multi-tree ensemble training. Apache Spark's distributed Resilient Distributed Dataset (RDD) abstraction and Catalyst Query Optimizer provide the requisite parallel execution fabric across worker cores."
     )
     add_paragraph(
         doc,
@@ -212,7 +212,7 @@ def build_report():
     add_image_with_caption(
         doc,
         "fig13_big_data_5vs.png",
-        "Fig. 13. The 5 V's of Big Data Applied Specifically to the SPARCS 2016 Healthcare Analytics Framework.",
+        "Fig. 13. The 5 V's of Big Data Applied Specifically to the SPARCS 2023 Healthcare Analytics Framework.",
         width_inches=6.2
     )
 
@@ -241,7 +241,7 @@ def build_report():
     add_heading_2(doc, "2.2 Benchmark Problem, Dataset and Methodology")
     add_paragraph(
         doc,
-        "The benchmark study by Jain et al. (2024) investigated the predictive modeling of hospital Length of Stay using the exact same underlying repository: the New York State SPARCS 2016 Inpatient Discharges dataset. The authors designed a machine learning pipeline that evaluated several supervised regression and classification architectures, including Ordinary Least Squares Linear Regression, Random Forest Regressors, and gradient-boosted decision trees via CatBoost, coupled with SHAP (SHapley Additive exPlanations) for post-hoc feature interpretability."
+        "The benchmark study by Jain et al. (2024) investigated the predictive modeling of hospital Length of Stay using the exact same underlying repository: the New York State SPARCS 2023 Inpatient Discharges dataset. The authors designed a machine learning pipeline that evaluated several supervised regression and classification architectures, including Ordinary Least Squares Linear Regression, Random Forest Regressors, and gradient-boosted decision trees via CatBoost, coupled with SHAP (SHapley Additive exPlanations) for post-hoc feature interpretability."
     )
     add_paragraph(
         doc,
@@ -312,7 +312,7 @@ def build_report():
     add_heading_2(doc, "3.2 Relationship to Benchmark Research")
     add_paragraph(
         doc,
-        "Both the benchmark publication and this project analyze the SPARCS 2016 inpatient discharges repository to elucidate Length of Stay dynamics. However, their scopes remain intentionally distinct: Jain et al. (2024) explored multi-algorithm predictive tuning and SHAP feature attribution on segregated subsets, whereas this project delivers a production-grade distributed Big Data framework in PySpark that handles the unified dataset with strict leakage isolation and transparent regression baseline metrics."
+        "Both the benchmark publication and this project analyze the SPARCS 2023 inpatient discharges repository to elucidate Length of Stay dynamics. However, their scopes remain intentionally distinct: Jain et al. (2024) explored multi-algorithm predictive tuning and SHAP feature attribution on segregated subsets, whereas this project delivers a production-grade distributed Big Data framework in PySpark that handles the unified dataset with strict leakage isolation and transparent regression baseline metrics."
     )
 
     # =========================================================================
@@ -323,7 +323,7 @@ def build_report():
     add_heading_2(doc, "4.1 Dataset Origin and Regulatory Context")
     add_paragraph(
         doc,
-        "The empirical foundation of this study is the Statewide Planning and Research Cooperative System (SPARCS) 2016 Inpatient Discharges dataset. Established in 1979 through collaboration between healthcare leaders and the New York State Department of Health (DOH), SPARCS represents a comprehensive legislative reporting system collecting patient-level discharge data from all Article 28 general hospitals across New York State. The data is publicly curated and distributed via the Health Data NY open data portal (health.data.ny.gov)."
+        "The empirical foundation of this study is the Statewide Planning and Research Cooperative System (SPARCS) 2023 Inpatient Discharges dataset. Established in 1979 through collaboration between healthcare leaders and the New York State Department of Health (DOH), SPARCS represents a comprehensive legislative reporting system collecting patient-level discharge data from all Article 28 general hospitals across New York State. The data is publicly curated and distributed via the Health Data NY open data portal (health.data.ny.gov)."
     )
 
     add_heading_2(doc, "4.2 Verified Size, Storage Format, and Access Parameters")
@@ -335,7 +335,7 @@ def build_report():
     t_size.cell(0, 1).paragraphs[0].text = "Verified Empirical Value"
     
     size_data = [
-        ("Discharge Cohort Year", "2016 (Full Calendar Year)"),
+        ("Discharge Cohort Year", "2023 (Full Calendar Year)"),
         ("Total Inpatient Records", "2,343,429 Verified Discharge Rows"),
         ("Attribute Count", "34 Raw Demographic, Clinical, and Administrative Columns"),
         ("Raw File Storage Format", "Comma-Separated Values (CSV) encapsulated in ZIP archive"),
@@ -384,7 +384,7 @@ def build_report():
     add_image_with_caption(
         doc,
         "fig4_missing_values_audit.png",
-        "Fig. 4. Missing Values Audit and Attribute Completeness Ratio Across SPARCS 2016 Attributes.",
+        "Fig. 4. Missing Values Audit and Attribute Completeness Ratio Across SPARCS 2023 Attributes.",
         width_inches=6.2
     )
 
@@ -433,7 +433,7 @@ def build_report():
     )
 
     add_heading_2(doc, "4.6 Big Data Characteristics Mapping")
-    add_paragraph(doc, "Table 4.3 synthesizes the application of the 5 V's of Big Data to the SPARCS 2016 inpatient dataset.")
+    add_paragraph(doc, "Table 4.3 synthesizes the application of the 5 V's of Big Data to the SPARCS 2023 inpatient dataset.")
 
     t_v = doc.add_table(rows=6, cols=3)
     set_table_styling(t_v, col_widths=[1.5, 2.5, 2.5])
@@ -489,7 +489,7 @@ def build_report():
         "# 3. Run unit tests on synthetic local data\n"
         "python -m pytest -q\n\n"
         "# 4. Execute end-to-end distributed pipeline\n"
-        "python -m src.main --input data/raw/Hospital_Inpatient_Discharges_2016.csv --output-dir outputs"
+        "python -m src.main --input data/raw/Hospital_Inpatient_Discharges_2023.csv --output-dir outputs"
     )
 
     add_heading_2(doc, "5.3 Executable PySpark Code Walkthrough")
@@ -516,7 +516,7 @@ def build_report():
         "    .config('spark.sql.shuffle.partitions', '8') \\\n"
         "    .getOrCreate()\n\n"
         "# 2. Load dataset with schema inference\n"
-        "df = spark.read.csv('Hospital_Inpatient_Discharges_2016.csv', header=True, inferSchema=True)\n"
+        "df = spark.read.csv('Hospital_Inpatient_Discharges_2023.csv', header=True, inferSchema=True)\n"
         "print('Total Records:', df.count())\n\n"
         "# 3. Deduplication and LoS classification\n"
         "df = df.dropDuplicates()\n"
@@ -574,7 +574,7 @@ def build_report():
     add_heading_2(doc, "6.1 Dataset-Level Empirical Findings")
     add_paragraph(
         doc,
-        "The distributed execution over the 2016 SPARCS inpatient cohort generated definitive empirical findings characterizing statewide hospital resource utilization.",
+        "The distributed execution over the 2023 SPARCS inpatient cohort generated definitive empirical findings characterizing statewide hospital resource utilization.",
         bold_prefix="Global Baseline Findings: "
     )
 
@@ -747,7 +747,7 @@ def build_report():
     t_comp.cell(0, 2).paragraphs[0].text = "Present PySpark Project"
     
     comp_data = [
-        ("Core Dataset", "NY SPARCS 2016 (2.34M records)", "NY SPARCS 2016 (2.34M records)"),
+        ("Core Dataset", "NY SPARCS 2023 (2.34M records)", "NY SPARCS 2023 (2.34M records)"),
         ("Analytical Scope", "Machine Learning prediction & SHAP interpretability", "Distributed data engineering, descriptive profiling & ML baseline"),
         ("Modeling Methods", "Linear Regression, Random Forest, CatBoost", "PySpark MLlib RandomForestRegressor (50 Trees)"),
         ("Population Partition", "Disjoint Newborn and Non-Newborn models", "Unified statewide cohort with Age/Admission features"),
@@ -798,7 +798,7 @@ def build_report():
 
     add_heading_2(doc, "7.3 Operational Limitations and Engineering Improvement Roadmap")
     add_paragraph(doc, "Rigorous academic evaluation requires acknowledging the operational boundaries of the current implementation:")
-    add_bullet(doc, "The dataset reflects hospital discharge practices specific to New York State in 2016. Regional variations in insurance reimbursement (e.g., Medicaid/Medicare managed care), local nursing home availability, and clinical guidelines limit direct generalizability to other states or countries.", bold_title="Geographic and Temporal Specificity")
+    add_bullet(doc, "The dataset reflects hospital discharge practices specific to New York State in 2023. Regional variations in insurance reimbursement (e.g., Medicaid/Medicare managed care), local nursing home availability, and clinical guidelines limit direct generalizability to other states or countries.", bold_title="Geographic and Temporal Specificity")
     add_bullet(doc, "The dataset captures retrospective discharge summaries. It lacks real-time physiological telemetry, lab vitals, nursing shift logs, and outpatient electronic health records.", bold_title="Absence of Granular Clinical Telemetry")
     add_bullet(doc, "The severe right-skewness of Length of Stay (stretching from 1 to 119 days) presents mathematical challenges for standard squared-error loss functions, which tend to under-predict lengthy hospitalizations.", bold_title="Right-Skewed Distribution Limits")
     add_paragraph(
@@ -836,7 +836,7 @@ def build_report():
 
     add_heading_2(doc, "8.2 Data Governance, Ethical Considerations, and Responsible Use")
     add_paragraph(doc, "Because healthcare data analytics directly interfaces with patient welfare, the project enforces strict ethical and governance principles:")
-    add_bullet(doc, "The SPARCS 2016 dataset is fully de-identified in strict adherence to HIPAA Safe Harbor standards. Personal identifiers (names, Social Security numbers, dates of birth, exact street addresses) are completely absent.", bold_title="Patient Privacy Preservation")
+    add_bullet(doc, "The SPARCS 2023 dataset is fully de-identified in strict adherence to HIPAA Safe Harbor standards. Personal identifiers (names, Social Security numbers, dates of birth, exact street addresses) are completely absent.", bold_title="Patient Privacy Preservation")
     add_bullet(doc, "No attempts were made, nor are tools included, to re-identify patients through cross-referencing external voter registration or public demographic records.", bold_title="Non-Re-identification Guarantee")
     add_bullet(doc, "All analytical queries and model predictions operate on aggregated cohorts or de-identified feature vectors. Individual patient records are never published.", bold_title="Aggregated Reporting")
     add_bullet(doc, "This project is strictly an educational and operational research tool. It does not provide clinical diagnostic guidance, medical triage recommendations, or individual patient prognosis.", bold_title="Clinical Disclaimer")
@@ -846,11 +846,11 @@ def build_report():
     
     refs = [
         "Jain, R., Singh, M., Rao, A. R., & Garg, R. (2024). Predicting hospital length of stay using machine learning on a large open health dataset. BMC Health Services Research, 24, 860. https://doi.org/10.1186/s12913-024-11238-y",
-        "New York State Department of Health. (2016). Statewide Planning and Research Cooperative System (SPARCS) Inpatient Discharges Data Dictionary. Health Data NY. https://health.data.ny.gov/",
+        "New York State Department of Health. (2023). Statewide Planning and Research Cooperative System (SPARCS) Inpatient Discharges Data Dictionary. Health Data NY. https://health.data.ny.gov/",
         "New York State Department of Health. SPARCS Data Access and Governance Guidelines. https://www.health.ny.gov/statistics/sparcs/access/",
         "Apache Software Foundation. (2024). Apache Spark: Unified Analytics Engine for Large-Scale Data Processing (Version 3.5.3). https://spark.apache.org/docs/latest/",
         "Armah, P. K., et al. (2023). Machine learning applications in hospital capacity planning and bed occupancy forecasting: A systematic review. Journal of Medical Systems, 47(1), 42.",
-        "3M Health Information Systems. (2016). All Patient Refined Diagnosis Related Groups (APR DRGs) Methodology Overview. 3M HIS Research Report."
+        "3M Health Information Systems. (2023). All Patient Refined Diagnosis Related Groups (APR DRGs) Methodology Overview. 3M HIS Research Report."
     ]
     for i, ref in enumerate(refs, start=1):
         add_paragraph(doc, ref, bold_prefix=f"[{i}] ", space_after=3)
@@ -862,7 +862,7 @@ def build_report():
     
     add_paragraph(
         doc,
-        "This project successfully designs, implements, and evaluates an end-to-end Big Data analytics framework applied to the 2,343,429 inpatient records of the New York State SPARCS 2016 dataset. By leveraging Apache Spark and PySpark, the system resolves critical data veracity challenges—including the mathematical isolation of 1,753 top-coded 120+ day stays, automated imputation of missing categorical attributes, and the strict enforcement of a clinical data leakage quarantine barrier.",
+        "This project successfully designs, implements, and evaluates an end-to-end Big Data analytics framework applied to the 2,343,429 inpatient records of the New York State SPARCS 2023 dataset. By leveraging Apache Spark and PySpark, the system resolves critical data veracity challenges—including the mathematical isolation of 1,753 top-coded 120+ day stays, automated imputation of missing categorical attributes, and the strict enforcement of a clinical data leakage quarantine barrier.",
         bold_prefix="Concluding Summary: "
     )
     add_paragraph(
@@ -879,8 +879,8 @@ def build_report():
     doc.save(str(out_path))
     print(f"Successfully generated {out_path} ({out_path.stat().st_size} bytes)")
 
-    # Also save a copy under SPARCS_2016_Big_Data_Analytics_Enhanced_Report.docx
-    out_path2 = Path("SPARCS_2016_Big_Data_Analytics_Enhanced_Report.docx")
+    # Also save a copy under SPARCS_2023_Big_Data_Analytics_Enhanced_Report.docx
+    out_path2 = Path("SPARCS_2023_Big_Data_Analytics_Enhanced_Report.docx")
     doc.save(str(out_path2))
     print(f"Successfully generated copy {out_path2} ({out_path2.stat().st_size} bytes)")
 

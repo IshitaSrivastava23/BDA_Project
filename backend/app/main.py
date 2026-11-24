@@ -17,7 +17,7 @@ configured_dataset = os.getenv("DATASET_PATH", "").strip()
 if configured_dataset:
     DATASET_PATH = configured_dataset
 else:
-    preferred_dataset = RAW_DATA_DIR / "Hospital_Inpatient_Discharges_2016.csv"
+    preferred_dataset = RAW_DATA_DIR / "Hospital_Inpatient_Discharges_2023.csv"
     csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))
     DATASET_PATH = str(preferred_dataset if preferred_dataset.exists() else (csv_files[0] if csv_files else preferred_dataset))
 PROCESSED_DATASET_PATH = os.getenv(
@@ -29,7 +29,7 @@ service = AnalyticsService(Path(DATASET_PATH), Path(PROCESSED_DATASET_PATH))
 app = FastAPI(
     title="Healthcare Big Data Analytics API",
     version="1.0.0",
-    description="Data-driven APIs for the SPARCS 2016 inpatient discharge project.",
+    description="Data-driven APIs for the SPARCS 2023 inpatient discharge project.",
 )
 app.add_middleware(
     CORSMiddleware,

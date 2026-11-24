@@ -27,7 +27,7 @@ SUMMARY = OUTPUT_DIR / "Modification_Summary.txt"
 
 
 def find_dataset() -> Path:
-    preferred = RAW_DIR / "Hospital_Inpatient_Discharges_2016.csv"
+    preferred = RAW_DIR / "Hospital_Inpatient_Discharges_2023.csv"
     if preferred.exists():
         return preferred
     files = sorted(RAW_DIR.glob("*.csv"))

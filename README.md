@@ -1,17 +1,17 @@
 # Healthcare Big Data Analytics
 
-This workspace contains the SPARCS 2016 inpatient discharge analytics pipeline and
+This workspace contains the SPARCS 2023 inpatient discharge analytics pipeline and
 an interactive web application around it. The application preserves the existing
 PySpark implementation as the source of truth: it does not fabricate metrics when
 the public dataset is absent.
 
 ## Run the application
 
-The source CSV is intentionally not committed. Download the NYS SPARCS 2016
+The source CSV is intentionally not committed. Download the NYS SPARCS 2023
 Inpatient Discharges dataset and place it at:
 
 ```text
-HospitalAnalytics/data/raw/Hospital_Inpatient_Discharges_2016.csv
+HospitalAnalytics/data/raw/Hospital_Inpatient_Discharges_2023.csv
 ```
 
 Start the API from `D:\Projectss\BDA`:

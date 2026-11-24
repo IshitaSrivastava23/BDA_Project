@@ -5,7 +5,7 @@ Features:
 - All 13 high-resolution 300 DPI figures embedded with academic numbering, centered layouts, and captions.
 - Beautifully formatted academic tables with navy header rows, zebra alternating shading, and auto-fit columns.
 - Professional highlight/callout boxes for key insights and leakage warnings.
-- Complete fidelity to the original research scope, problem statement, SPARCS 2016 dataset, numerical results, and conclusions.
+- Complete fidelity to the original research scope, problem statement, SPARCS 2023 dataset, numerical results, and conclusions.
 """
 
 import os
