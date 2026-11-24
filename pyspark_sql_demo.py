@@ -1,5 +1,6 @@
 
 from pyspark.sql import SparkSession
+from pathlib import Path
 
 # 1. Initialize Spark
 spark = (
@@ -15,6 +16,9 @@ print("\n========== PYSPARK SQL DEMONSTRATION ==========\n")
 
 # 2. Load the SPARCS dataset
 file_path = r"D:\Projectss\BDA\HospitalAnalytics\data\raw\H~ospital_Inpatient_Discharges_(SPARCS_De-Identified)__2023_20261101.csv"
+raw_dir = Path(r"D:\Projectss\BDA\HospitalAnalytics\data\raw")
+preferred = raw_dir / "Hospital_Inpatient_Discharges_2023.csv"
+file_path = str(preferred if preferred.exists() else next(raw_dir.glob("*.csv"), preferred))
 
 df = (
     spark.read

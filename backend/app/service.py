@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 from threading import Lock
 from typing import Any
+from functools import lru_cache
 
 import pandas as pd
 
@@ -98,9 +99,10 @@ class AnalyticsService:
                 "columns": [],
             }
         frame = self._load()
+        source_year = self._source_year(frame)
         return {
             "data_available": True,
-            "source": "NYS SPARCS 2023 Inpatient Discharges",
+            "source": f"NYS SPARCS {source_year} Inpatient Discharges",
             "rows": int(len(frame)),
             "column_count": int(len(frame.columns)),
             "columns": self.columns()["items"],
@@ -109,6 +111,14 @@ class AnalyticsService:
                 for column in frame.columns
             },
         }
+
+    def _source_year(self, frame: pd.DataFrame) -> str:
+        if "discharge_year" in frame.columns:
+            years = frame["discharge_year"].dropna().astype(str).unique()
+            if len(years) == 1:
+                return str(years[0])
+        match = re.search(r"(20\d{2})", self.dataset_path.name)
+        return match.group(1) if match else "Historical"
 
     def columns(self) -> dict[str, Any]:
         if not self.available:
@@ -157,6 +167,10 @@ class AnalyticsService:
         return {"data_available": True, "page": page, "page_size": page_size, "total": total, "rows": rows.to_dict("records")}
 
     def analytics(self, age_group: str, admission_type: str, severity: str) -> dict[str, Any]:
+        return self._analytics_cached(age_group, admission_type, severity)
+
+    @lru_cache(maxsize=64)
+    def _analytics_cached(self, age_group: str, admission_type: str, severity: str) -> dict[str, Any]:
         frame = self._filtered(age_group, admission_type, severity)
         result: dict[str, Any] = {"data_available": True, "filters": {"age_group": age_group, "admission_type": admission_type, "severity": severity}}
         result["options"] = {

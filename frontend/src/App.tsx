@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { Activity, BarChart3, BookOpen, Database, Factory, Gauge, Info, Menu, RefreshCw, X } from "lucide-react";
+import { Activity, BarChart3, BookOpen, Database, Factory, Gauge, Info, Menu, RefreshCw, Terminal, X } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { getJson } from "./api";
+import { getJson, postJson } from "./api";
 
-type Page = "overview" | "explorer" | "analytics" | "processing" | "insights" | "methodology" | "about";
+type Page = "overview" | "explorer" | "analytics" | "spark" | "processing" | "insights" | "methodology" | "about";
 type MetricValue = number | null;
 type Summary = { data_available: boolean; message?: string; metrics: Record<string, MetricValue>; insights: Insight[] };
 type Insight = { title: string; metric: number; value: string; explanation: string };
@@ -18,10 +18,12 @@ type Analytics = {
 };
 type Metadata = { data_available: boolean; source: string; message?: string; rows?: number; column_count?: number; columns: { name: string; dtype: string; missing: number; unique_values: number }[] };
 type Sample = { data_available: boolean; total: number; rows: Record<string, unknown>[] };
+type SparkStatus = { available: boolean; dataset: string; java_home: string; session_active: boolean; error: string | null };
+type SparkResult = { columns: string[]; rows: Record<string, unknown>[]; row_count: number };
 
 const nav = [
   ["overview", "Overview", Gauge], ["explorer", "Dataset Explorer", Database], ["analytics", "Healthcare Analytics", BarChart3],
-  ["processing", "Big Data Processing", Factory], ["insights", "Insights & Findings", Activity], ["methodology", "Methodology", BookOpen], ["about", "About", Info],
+  ["spark", "Spark SQL", Terminal], ["processing", "Big Data Processing", Factory], ["insights", "Insights & Findings", Activity], ["methodology", "Methodology", BookOpen], ["about", "About", Info],
 ] as const;
 
 function formatMetric(value: MetricValue | undefined, suffix = ""): string {
@@ -57,7 +59,15 @@ function App() {
     } catch (reason) { setError(reason instanceof Error ? reason.message : "The API could not be reached."); }
   };
   useEffect(() => { void load(); }, []);
-  useEffect(() => { if (summary?.data_available) void getJson<Analytics>(`/api/analytics/overview?${new URLSearchParams(filters)}`).then(setAnalytics).catch(() => setError("Could not refresh filtered analytics.")); }, [filters, summary?.data_available]);
+  useEffect(() => {
+    if (!summary?.data_available) return;
+    const timeout = window.setTimeout(() => {
+      void getJson<Analytics>(`/api/analytics/overview?${new URLSearchParams(filters)}`)
+        .then(setAnalytics)
+        .catch(() => setError("Could not refresh filtered analytics."));
+    }, 250);
+    return () => window.clearTimeout(timeout);
+  }, [filters, summary?.data_available]);
   const go = (next: Page) => { setPage(next); setMobileOpen(false); };
   const current = nav.find(([key]) => key === page);
 
@@ -72,6 +82,7 @@ function App() {
       {page === "overview" && <Overview summary={summary} onExplore={() => go("analytics")} />}
       {page === "explorer" && <Explorer metadata={metadata} />}
       {page === "analytics" && <AnalyticsPage data={analytics} filters={filters} setFilters={setFilters} />}
+      {page === "spark" && <SparkPage />}
       {page === "processing" && <Processing />}
       {page === "insights" && <Insights summary={summary} />}
       {page === "methodology" && <Methodology />}
@@ -93,8 +104,13 @@ function Overview({ summary, onExplore }: { summary: Summary | null; onExplore: 
 
 function Explorer({ metadata }: { metadata: Metadata | null }) {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [rows, setRows] = useState<Sample | null>(null);
-  useEffect(() => { if (metadata?.data_available) void getJson<Sample>(`/api/dataset/sample?search=${encodeURIComponent(query)}`).then(setRows); }, [metadata?.data_available, query]);
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedQuery(query), 350);
+    return () => window.clearTimeout(timeout);
+  }, [query]);
+  useEffect(() => { if (metadata?.data_available) void getJson<Sample>(`/api/dataset/sample?search=${encodeURIComponent(debouncedQuery)}`).then(setRows); }, [metadata?.data_available, debouncedQuery]);
   if (!metadata) return <div className="loading">Loading dataset metadata…</div>;
   if (!metadata.data_available) return <div className="page-content"><State message={metadata.message ?? "No local dataset was found."} /></div>;
   return <div className="page-content"><div className="section-title"><div><span className="eyebrow">SOURCE INSPECTION</span><h2>{metadata.source}</h2></div><p>Only safe analytical fields are included in the sample table.</p></div><div className="kpi-grid compact"><div className="kpi card"><span>Rows</span><strong>{formatMetric(metadata.rows ?? null)}</strong></div><div className="kpi card"><span>Columns</span><strong>{formatMetric(metadata.column_count ?? null)}</strong></div><div className="kpi card"><span>Fields shown</span><strong>9</strong></div></div><section className="card table-card"><div className="card-heading"><h3>Dataset sample</h3><input className="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search safe fields…" /></div><div className="table-wrap">{rows?.rows.length ? <table><thead><tr>{Object.keys(rows.rows[0]).map((key) => <th key={key}>{key.replaceAll("_", " ")}</th>)}</tr></thead><tbody>{rows.rows.map((row, index) => <tr key={index}>{Object.values(row).map((value, cell) => <td key={cell}>{String(value)}</td>)}</tr>)}</tbody></table> : <p className="muted table-empty">No rows match the current search.</p>}</div></section><section className="card table-card"><div className="card-heading"><h3>Columns and data quality</h3></div><div className="table-wrap"><table><thead><tr><th>Column</th><th>Type</th><th>Missing</th><th>Unique values</th></tr></thead><tbody>{metadata.columns.map((column) => <tr key={column.name}><td>{column.name}</td><td>{column.dtype}</td><td>{column.missing.toLocaleString()}</td><td>{column.unique_values.toLocaleString()}</td></tr>)}</tbody></table></div></section></div>;
@@ -112,6 +128,36 @@ function AnalyticsPage({ data, filters, setFilters }: { data: Analytics | null; 
 const defaultFilters = { age_group: "", admission_type: "", severity: "" };
 function SimpleBar({ data, color }: { data: { name: string; value: number }[]; color: string }) { return data.length ? <ResponsiveContainer width="100%" height="100%"><BarChart data={data} margin={{ top: 8, right: 12, left: -18, bottom: 30 }}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="name" angle={-25} textAnchor="end" height={55} tick={{ fontSize: 11 }} /><YAxis tick={{ fontSize: 11 }} /><Tooltip /><Bar dataKey="value" fill={color} radius={[4, 4, 0, 0]} /></BarChart></ResponsiveContainer> : <p className="muted centered">No data for this view.</p>; }
 function SimpleLine({ data }: { data: { name: string; value: number }[] }) { return data.length ? <ResponsiveContainer width="100%" height="100%"><LineChart data={data} margin={{ top: 8, right: 12, left: -18, bottom: 20 }}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="name" tick={{ fontSize: 11 }} /><YAxis tick={{ fontSize: 11 }} /><Tooltip /><Line type="monotone" dataKey="value" stroke="#087f8c" strokeWidth={3} dot={false} /></LineChart></ResponsiveContainer> : <p className="muted centered">No data for this view.</p>; }
+
+function SparkPage() {
+  const [status, setStatus] = useState<SparkStatus | null>(null);
+  const [sql, setSql] = useState('SELECT `Age Group`, COUNT(*) AS admissions\nFROM hospital_data\nGROUP BY `Age Group`\nORDER BY admissions DESC');
+  const [result, setResult] = useState<SparkResult | null>(null);
+  const [running, setRunning] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => { void getJson<SparkStatus>("/api/spark/status").then(setStatus).catch((reason) => setError(reason instanceof Error ? reason.message : "Could not inspect Spark.")); }, []);
+
+  const runQuery = async () => {
+    setRunning(true);
+    setError("");
+    try {
+      setResult(await postJson<SparkResult>("/api/spark/query", { sql }));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Could not run Spark SQL.");
+    } finally {
+      setRunning(false);
+    }
+  };
+
+  return <div className="page-content"><div className="section-title"><div><span className="eyebrow">INTERACTIVE SPARK</span><h2>PySpark SQL workspace</h2></div><p>Run read-only SQL against the hospital_data temporary view.</p></div>
+    {status && <div className="kpi-grid compact"><div className="kpi card"><span>Dataset</span><strong>{status.available ? "Available" : "Missing"}</strong></div><div className="kpi card"><span>Spark session</span><strong>{status.session_active ? "Active" : "On demand"}</strong></div><div className="kpi card"><span>Result limit</span><strong>1,000 rows</strong></div></div>}
+    {status?.error && <div className="error">{status.error}</div>}
+    {error && <div className="error">{error}</div>}
+    <section className="card table-card"><div className="card-heading"><h3>SQL editor</h3><button className="primary" onClick={() => void runQuery()} disabled={running || !status?.available}>{running ? "Running…" : "Run query"}</button></div><textarea className="sql-editor" value={sql} onChange={(event) => setSql(event.target.value)} spellCheck={false} /></section>
+    {result && <section className="card table-card"><div className="card-heading"><h3>Query results</h3><span className="muted">{result.row_count} rows</span></div><div className="table-wrap">{result.rows.length ? <table><thead><tr>{result.columns.map((column) => <th key={column}>{column}</th>)}</tr></thead><tbody>{result.rows.map((row, index) => <tr key={index}>{result.columns.map((column) => <td key={column}>{String(row[column] ?? "")}</td>)}</tr>)}</tbody></table> : <p className="muted table-empty">No rows returned.</p>}</div></section>}
+  </div>;
+}
 
 function Processing() { const steps = [{ name: "Ingestion", text: "Read and validate the source CSV or cleaned Parquet dataset." }, { name: "Cleaning", text: "Deduplicate rows, normalize categorical missing values, and classify numeric versus top-coded Length of Stay." }, { name: "Aggregation", text: "Build overall, age, admission, severity, diagnosis, and hospital summaries." }, { name: "Prediction", text: "Train a Spark MLlib Random Forest baseline using predictors selected to avoid post-discharge leakage." }, { name: "Visualization", text: "Write bounded reports and charts for the dashboard and research report." }]; return <div className="page-content"><div className="section-title"><div><span className="eyebrow">PIPELINE</span><h2>Raw data → evidence</h2></div><p>Implementation follows the existing HospitalAnalytics Python modules.</p></div><div className="pipeline">{steps.map((step, index) => <div className="pipeline-step card" key={step.name}><div className="step-number">0{index + 1}</div><div><h3>{step.name}</h3><p>{step.text}</p></div>{index < steps.length - 1 && <span className="connector">→</span>}</div>)}</div><section className="card prose"><h3>Why PySpark?</h3><p>The source dataset contains approximately 2.34 million historical, de-identified inpatient discharge records. Spark provides distributed CSV ingestion, transformations, SQL-style aggregations, and a Spark MLlib baseline while keeping the workflow reproducible on a local machine.</p><div className="code-note">Source of truth: HospitalAnalytics/src/ingestion, preprocessing, analysis, ml, and visualization</div></section></div>; }
 function Insights({ summary }: { summary: Summary | null }) { if (!summary) return <div className="loading">Loading insights…</div>; return <div className="page-content"><div className="section-title"><div><span className="eyebrow">EVIDENCE</span><h2>Insights & findings</h2></div><p>Descriptive findings are generated from the configured dataset; no causal claims are made.</p></div>{summary.data_available && summary.insights.length ? <div className="insight-grid">{summary.insights.map((item) => <article className="card insight" key={item.title}><span className="insight-icon"><Activity size={18} /></span><h3>{item.title}</h3><strong>{item.value}</strong><span>{item.metric.toLocaleString()} records</span><p>{item.explanation}</p></article>)}</div> : <State message="Insights will appear after the SPARCS dataset is configured." />}</div>; }
